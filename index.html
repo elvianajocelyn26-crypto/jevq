@@ -1,0 +1,622 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JEVQPHOTOS | Ocean Photo Studio</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  color: #12415a;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at top, #e1ffff 0%, transparent 55%),
+    linear-gradient(180deg, #8de8f5, #d7f9ff 48%, #fff0f7);
+  overflow-x: hidden;
+}
+
+header {
+  text-align: center;
+  padding: 22px 10px;
+  background: linear-gradient(90deg, #087eae, #36c9d8, #087eae);
+  color: white;
+  box-shadow: 0 4px 15px #07567830;
+}
+
+header h1 {
+  font-size: clamp(28px, 5vw, 46px);
+  letter-spacing: 4px;
+  text-shadow: 2px 3px 0 #08769a;
+}
+
+header p {
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+.ocean {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -70px;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #ffffffa8;
+  border-radius: 50%;
+  animation: floatUp 12s linear infinite;
+}
+
+.bubble:nth-child(1) {
+  left: 8%;
+  animation-delay: 0s;
+}
+
+.bubble:nth-child(2) {
+  left: 25%;
+  width: 35px;
+  height: 35px;
+  animation-delay: 4s;
+}
+
+.bubble:nth-child(3) {
+  left: 72%;
+  animation-delay: 2s;
+}
+
+.bubble:nth-child(4) {
+  left: 91%;
+  width: 42px;
+  height: 42px;
+  animation-delay: 6s;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: .8;
+  }
+  to {
+    transform: translateY(-115vh);
+    opacity: 0;
+  }
+}
+
+.layout {
+  width: min(1450px, 98%);
+  margin: 25px auto;
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) minmax(300px, 2.3fr) minmax(140px, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.character {
+  text-align: center;
+  padding: 15px 10px;
+  border-radius: 22px;
+  background: #ffffffa6;
+  border: 2px solid white;
+  box-shadow: 0 8px 25px #087eae20;
+  overflow: hidden;
+}
+
+.character h2 {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+.character p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.character .art {
+  min-height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(65px, 8vw, 105px);
+  border-radius: 16px;
+  margin-bottom: 12px;
+  background: linear-gradient(160deg, #b6f5ff, #f6fdff, #ffd9ed);
+}
+
+.william {
+  color: #086c9b;
+}
+
+.barbie {
+  color: #e92c90;
+}
+
+.barbie .art {
+  background: linear-gradient(160deg, #ffd9ed, #fff, #b3f1ff);
+}
+
+main {
+  min-width: 0;
+  text-align: center;
+}
+
+.intro {
+  padding: 8px 0 20px;
+}
+
+.intro h2 {
+  font-size: clamp(24px, 4vw, 34px);
+  color: #087eae;
+  margin-bottom: 8px;
+}
+
+.intro p {
+  line-height: 1.6;
+}
+
+.camera-box {
+  background: #10465e;
+  border: 5px solid #fff;
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 12px 30px #07567835;
+}
+
+.camera-screen {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #123b50, #071c30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#video, #photo {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#placeholder {
+  color: white;
+  padding: 20px;
+  line-height: 1.8;
+}
+
+.camera-icon {
+  display: block;
+  font-size: 55px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+button, select {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+button {
+  cursor: pointer;
+  background: #08a9c7;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 3px 8px #0002;
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+button:disabled {
+  background: #879da5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pink {
+  background: #ed4ca3;
+}
+
+.dark {
+  background: #326078;
+}
+
+select {
+  max-width: 100%;
+  background: white;
+  border: 1px solid #a3dfe8;
+  color: #12415a;
+}
+
+#status {
+  color: white;
+  margin-top: 13px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.panel {
+  text-align: left;
+  background: #ffffffdc;
+  padding: 18px;
+  margin-top: 18px;
+  border: 1px solid #c7edf4;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px #087eae12;
+}
+
+.panel h3 {
+  margin-bottom: 12px;
+  color: #087eae;
+}
+
+.panel p {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #527384;
+}
+
+#savedPhoto {
+  display: none;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+footer {
+  text-align: center;
+  padding: 24px 10px;
+  color: #24657b;
+  font-size: 13px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  main {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .character .art {
+    min-height: 100px;
+    font-size: 60px;
+  }
+
+  .character h2 {
+    font-size: 15px;
+  }
+
+  .character p {
+    font-size: 12px;
+  }
+
+  .controls button {
+    flex: 1 1 40%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="ocean" aria-hidden="true">
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+</div>
+
+<header>
+  <h1>🌊 JEVQPHOTOS 🐚</h1>
+  <p>OCEAN DREAM PHOTO STUDIO ✨</p>
+</header>
+
+<div class="layout">
+
+  <!-- Dekorasi kiri: William Jakrapart -->
+  <aside class="character william">
+    <div class="art" aria-hidden="true">🌊🧜🏻‍♂️</div>
+    <h2>William Jakrapart</h2>
+    <p>Ocean Prince</p>
+    <p>🐚 🌊 🩵 🐬</p>
+    <p style="margin-top:12px">
+      Sea breeze, blue skies, and beautiful memories.
+    </p>
+  </aside>
+
+  <!-- Studio kamera -->
+  <main>
+    <section class="intro">
+      <h2>Capture Your Ocean Moments!</h2>
+      <p>Ambil foto, pilih efek, dan simpan kenanganmu.</p>
+    </section>
+
+    <section class="camera-box">
+      <div class="camera-screen">
+        <div id="placeholder">
+          <span class="camera-icon">📸</span>
+          Selamat datang di JEVQPHOTOS!<br>
+          Tekan Open Webcam untuk memulai.
+        </div>
+
+        <video id="video" autoplay playsinline></video>
+        <img id="photo" alt="Hasil foto JEVQPHOTOS">
+      </div>
+
+      <div class="controls">
+        <button onclick="openCamera()">▶ Open Webcam</button>
+        <button id="photoBtn" class="pink"
+          onclick="takePhoto()" disabled>📸 Foto</button>
+        <button class="dark" onclick="showCamera()"
+          id="backBtn" disabled>↩ Kamera</button>
+      </div>
+
+      <div id="status" role="status" aria-live="polite">
+        Status: Menunggu kamera dibuka.
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3>✨ Pilih Efek Foto</h3>
+      <select id="effectSelect" onchange="changeEffect()">
+        <option value="none">Normal</option>
+        <option value="grayscale(1)">Hitam Putih</option>
+        <option value="sepia(1)">Vintage / Sepia</option>
+        <option value="contrast(1.5) saturate(1.4)">Kontras</option>
+        <option value="brightness(1.2) saturate(1.5)">Cerah</option>
+        <option value="invert(1)">Negatif</option>
+        <option value="hue-rotate(100deg) saturate(1.5)">Neon</option>
+        <option value="saturate(2)">Warna Cerah</option>
+        <option value="blur(2px)">Blur</option>
+      </select>
+      <p>Tip: pilih efek sebelum menekan tombol Foto.</p>
+    </section>
+
+    <section class="panel">
+      <h3>🖼️ Hasil Foto</h3>
+      <img id="savedPhoto" alt="Foto hasil jepretan">
+
+      <div class="controls">
+        <button id="downloadBtn" onclick="downloadPhoto()" disabled>
+          ⬇ Simpan Foto
+        </button>
+        <button class="dark" onclick="resetPhoto()">Hapus Foto</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Dekorasi kanan: Barbie -->
+  <aside class="character barbie">
+    <div class="art" aria-hidden="true">🧜🏻‍♀️🩷</div>
+    <h2>Barbie</h2>
+    <p>Mermaid Princess</p>
+    <p>🩷 🐚 🪸 🐠</p>
+    <p style="margin-top:12px">
+      Pink dreams, ocean waves, and magical moments.
+    </p>
+  </aside>
+
+</div>
+
+<footer>
+  🐬 © 2026 JEVQPHOTOS · Made with ocean vibes 🩵
+</footer>
+
+<script>
+const video = document.getElementById("video");
+const photo = document.getElementById("photo");
+const placeholder = document.getElementById("placeholder");
+const effectSelect = document.getElementById("effectSelect");
+const statusText = document.getElementById("status");
+const photoBtn = document.getElementById("photoBtn");
+const backBtn = document.getElementById("backBtn");
+const downloadBtn = document.getElementById("downloadBtn");
+const savedPhoto = document.getElementById("savedPhoto");
+
+let stream = null;
+let photoData = null;
+
+function setStatus(message) {
+  statusText.textContent = "Status: " + message;
+}
+
+// 1. Open Webcam
+async function openCamera() {
+  if (!navigator.mediaDevices?.getUserMedia) {
+    setStatus("Gunakan HTTPS atau localhost untuk membuka kamera.");
+    return;
+  }
+
+  try {
+    setStatus("Meminta izin kamera...");
+
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+    }
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: "user",
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      },
+      audio: false
+    });
+
+    video.srcObject = stream;
+    await video.play();
+
+    video.style.display = "block";
+    photo.style.display = "none";
+    placeholder.style.display = "none";
+
+    photoBtn.disabled = false;
+    backBtn.disabled = false;
+
+    changeEffect();
+    setStatus("Kamera aktif! Saatnya berfoto 🌊");
+
+  } catch (error) {
+    let message = "Kamera gagal dibuka.";
+
+    if (error.name === "NotAllowedError") {
+      message = "Izin kamera ditolak. Izinkan kamera di browser.";
+    } else if (error.name === "NotFoundError") {
+      message = "Webcam tidak ditemukan.";
+    } else if (error.name === "NotReadableError") {
+      message = "Kamera sedang digunakan aplikasi lain.";
+    }
+
+    setStatus(message);
+  }
+}
+
+// 2. Efek kamera
+function changeEffect() {
+  const effect = effectSelect.value === "none"
+    ? "none"
+    : effectSelect.value;
+
+  video.style.filter = effect;
+  photo.style.filter = effect;
+  savedPhoto.style.filter = effect;
+}
+
+// 3. Ambil foto dengan efek
+function takePhoto() {
+  if (!stream || video.readyState < 2) {
+    setStatus("Tunggu sampai kamera siap.");
+    return;
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  const context = canvas.getContext("2d");
+
+  context.filter = effectSelect.value === "none"
+    ? "none"
+    : effectSelect.value;
+
+  // Efek cermin untuk selfie
+  context.translate(canvas.width, 0);
+  context.scale(-1, 1);
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  photoData = canvas.toDataURL("image/png");
+
+  photo.src = photoData;
+  savedPhoto.src = photoData;
+
+  photo.style.display = "block";
+  video.style.display = "none";
+  placeholder.style.display = "none";
+  savedPhoto.style.display = "block";
+
+  downloadBtn.disabled = false;
+  backBtn.disabled = false;
+
+  setStatus("Foto berhasil diambil! 🐚");
+}
+
+// 4. Kembali ke kamera
+function showCamera() {
+  if (!stream) {
+    setStatus("Tekan Open Webcam terlebih dahulu.");
+    return;
+  }
+
+  photo.style.display = "none";
+  video.style.display = "block";
+
+  changeEffect();
+  setStatus("Kamera siap digunakan.");
+}
+
+// 5. Simpan foto
+function downloadPhoto() {
+  if (!photoData) {
+    setStatus("Ambil foto terlebih dahulu.");
+    return;
+  }
+
+  const link = document.createElement("a");
+  link.href = photoData;
+  link.download = "JEVQPHOTOS-" + Date.now() + ".png";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setStatus("Foto siap diunduh! 🩵");
+}
+
+// 6. Hapus hasil foto
+function resetPhoto() {
+  photoData = null;
+
+  photo.removeAttribute("src");
+  savedPhoto.removeAttribute("src");
+
+  photo.style.display = "none";
+  savedPhoto.style.display = "none";
+  downloadBtn.disabled = true;
+
+  if (stream) {
+    video.style.display = "block";
+    placeholder.style.display = "none";
+    setStatus("Foto dihapus. Kamera siap digunakan.");
+  } else {
+    video.style.display = "none";
+    placeholder.style.display = "block";
+    setStatus("Foto dihapus.");
+  }
+
+  changeEffect();
+}
+
+// 7. Matikan kamera ketika halaman ditinggalkan
+window.addEventListener("pagehide", () => {
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+  }
+});
+</script>
+
+</body>
+</html>
+
